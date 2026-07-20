@@ -17,7 +17,7 @@ BOARDS = [
     },
     {
         "name": "컴퓨터과학과 공지",
-        "list_url": "https://cs.knou.ac.kr/bbs/cs1/2119/artclList.do",  # ⚠️ 실제 주소 재확인 필요
+        "list_url": "https://cs.knou.ac.kr/cs1/4812/subview.do",
         "base_url": "https://cs.knou.ac.kr",
         "emoji": "💻",
     },

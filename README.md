@@ -14,9 +14,9 @@ crawler.py의 BOARDS 리스트에 딕셔너리 하나 추가하면 됩니다.
 ## 파일 구조
 knou-notice-bot/
 ├── crawler.py              # 크롤링 + Slack 전송 메인 로직
-├── seen_ids.json           # 이전에 본 공지 ID 기록 (첫 실행 시 자동 생성됨, 직접 안 만들어도 됨)
+├── seen_ids.json           # 이전에 본 공지 ID 기록
 ├── requirements.txt        # 필요한 파이썬 패키지 목록
-├── README.md               # 이 봇이 뭐하는 건지 설명
+├── README.md               
 └── .github/
     └── workflows/
         └── crawl.yml       # GitHub Actions 자동 실행 설정
