@@ -1,9 +1,8 @@
-name: School Notice Crawler
+name: School Notice Auto Crawler
 
 on:
   schedule:
     - cron: "0/10 * * * *"
-  workflow_dispatch:
 
 permissions:
   contents: write
