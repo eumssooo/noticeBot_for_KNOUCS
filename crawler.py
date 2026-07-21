@@ -85,11 +85,11 @@ def crawl_board(board):
 
 
 def send_to_slack(board, notice):
+    writer_part = f" · {notice['writer']}" if notice.get("writer") else ""
     payload = {
-        "text": f"{board['emoji']} *[{board['name']}]* 새 공지: <{notice['link']}|{notice['title']}>"
+        "text": f"{board['emoji']} *[{board['name']}]* <{notice['link']}|{notice['title']}>{writer_part}"
     }
     requests.post(SLACK_WEBHOOK_URL, json=payload, timeout=10)
-
 
 def main():
     seen = load_seen_ids()
