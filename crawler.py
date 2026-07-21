@@ -44,23 +44,37 @@ def crawl_board(board):
     soup = BeautifulSoup(res.text, "html.parser")
 
     notices = []
-    # K2Web 게시판은 보통 table 안에 artclView.do 링크로 구성됨
     for a in soup.select("a[href*='artclView.do']"):
         title = a.get_text(strip=True)
+        title = re.sub(r"\s*새글\s*$", "", title)
         href = a.get("href")
         if not title or not href:
             continue
 
-        # 글번호 추출: .../51/805715/artclView.do 형태
         m = re.search(r"/(\d+)/artclView\.do", href)
         if not m:
             continue
         notice_id = f"{board['name']}-{m.group(1)}"
 
         full_link = href if href.startswith("http") else board["base_url"] + href
-        notices.append({"id": notice_id, "title": title, "link": full_link})
 
-    # 같은 글이 목록에 여러 번(일반공지+실제글) 나올 수 있어 중복 제거
+        # 작성자 뽑기: 링크가 속한 행(tr)을 찾아서 그 안의 td들을 확인
+        row = a.find_parent("tr")
+        writer = ""
+        if row:
+            tds = row.find_all("td")
+            # 보통 구조: 번호 | 제목 | 작성자 | 작성일 | 조회수
+            # td 개수 보고 위치 조정 필요할 수 있음
+            if len(tds) >= 3:
+                writer = tds[2].get_text(strip=True)
+
+        notices.append({
+            "id": notice_id,
+            "title": title,
+            "link": full_link,
+            "writer": writer,
+        })
+
     seen_in_page = set()
     unique = []
     for n in notices:
