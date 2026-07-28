@@ -10,13 +10,13 @@ SLACK_WEBHOOK_URL = os.environ["SLACK_WEBHOOK_URL"]
 # 여러 게시판 등록 - 여기에 원하는 게시판 추가
 BOARDS = [
     {
-        "name": "학사공지",
+        "name": "KNOU",
         "list_url": "https://www.knou.ac.kr/bbs/knou/51/artclList.do",
         "base_url": "https://www.knou.ac.kr",
         "emoji": "🏫",
     },
     {
-        "name": "컴퓨터과학과 공지",
+        "name": "KNOU CS",
         "list_url": "https://cs.knou.ac.kr/cs1/4812/subview.do",
         "base_url": "https://cs.knou.ac.kr",
         "emoji": "💻",
@@ -63,8 +63,7 @@ def crawl_board(board):
         writer = ""
         if row:
             tds = row.find_all("td")
-            # 보통 구조: 번호 | 제목 | 작성자 | 작성일 | 조회수
-            # td 개수 보고 위치 조정 필요할 수 있음
+            # 구조: 번호 | 제목 | 작성자 | 작성일 | 조회수
             if len(tds) >= 3:
                 writer = tds[2].get_text(strip=True)
 
