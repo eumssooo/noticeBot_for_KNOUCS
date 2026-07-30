@@ -5,7 +5,11 @@ import os
 import re
 
 SEEN_FILE = "seen_ids.json"
-SLACK_WEBHOOK_URL = os.environ["SLACK_WEBHOOK_URL"]
+WEB_HOOKS = [
+    os.environ["SLACK_WEBHOOK_URL"],
+    os.environ["SLACK_WEBHOOK_URL_FOR_GL"]
+]
+# SLACK_WEBHOOK_URL = os.environ["SLACK_WEBHOOK_URL"]
 
 # 여러 게시판 등록 - 여기에 원하는 게시판 추가
 BOARDS = [
@@ -88,8 +92,9 @@ def send_to_slack(board, notice):
     payload = {
         "text": f"{board['emoji']} *[{board['name']}]* <{notice['link']}|{notice['title']}>{writer_part}"
     }
-    requests.post(SLACK_WEBHOOK_URL, json=payload, timeout=10)
-
+    for webhook_url in WEBHOOKS:
+        requests.post(webhook_url, json=payload, timeout=10)
+        
 def main():
     seen = load_seen_ids()
     first_run = len(seen) == 0
