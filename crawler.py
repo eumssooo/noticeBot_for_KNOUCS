@@ -5,7 +5,7 @@ import os
 import re
 
 SEEN_FILE = "seen_ids.json"
-WEB_HOOKS = [
+WEBHOOKS = [
     os.environ["SLACK_WEBHOOK_URL"],
     os.environ["SLACK_WEBHOOK_URL_FOR_GL"]
 ]
