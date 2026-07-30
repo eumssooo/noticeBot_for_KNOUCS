@@ -22,6 +22,7 @@ jobs:
       - name: Run crawler
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL_FOR_GL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_GL }}
         run: python crawler.py
 
       - name: Commit updated state
