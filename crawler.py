@@ -87,10 +87,15 @@ def crawl_board(board):
     return unique
 
 
+def escape_slack_text(text):
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def send_to_slack(board, notice):
-    writer_part = f" · {notice['writer']}" if notice.get("writer") else ""
+    title = escape_slack_text(notice["title"])
+    writer_part = f" · {escape_slack_text(notice['writer'])}" if notice.get("writer") else ""
     payload = {
-        "text": f"{board['emoji']} *[{board['name']}]* <{notice['link']}|{notice['title']}>{writer_part}"
+        "text": f"{board['emoji']} *[{board['name']}]* <{notice['link']}|{title}>{writer_part}"
     }
     for webhook_url in WEBHOOKS:
         requests.post(webhook_url, json=payload, timeout=10)
